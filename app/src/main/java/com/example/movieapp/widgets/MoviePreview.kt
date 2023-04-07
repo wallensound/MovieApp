@@ -3,6 +3,7 @@ package com.example.movieapp.widgets
 import android.util.Log
 import android.widget.Space
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
@@ -25,13 +26,23 @@ fun MoviePreview(result: Result) {
             Surface(
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(16.dp))
+                    .clickable {  }
             ) {
                 Log.d("TAG", "MoviePreview: ${result.poster_path}")
-                AsyncImage(model = "https://image.tmdb.org/t/p/w500${result.poster_path}", contentDescription = "${result.title} poster")
+                AsyncImage(
+                    model = "https://image.tmdb.org/t/p/w500${result.poster_path}",
+                    contentDescription = "${result.title} poster"
+                )
             }
             Column(Modifier.padding(top = 20.dp)) {
-                Text(text = result.title, style = MaterialTheme.typography.subtitle1)
-                Text(text = result.release_date, style = MaterialTheme.typography.caption)
+                Text(
+                    text = if (result.title != null) result.title else result.name,
+                    style = MaterialTheme.typography.subtitle1
+                )
+                Text(
+                    text = if (result.release_date != null) result.release_date else result.first_air_date,
+                    style = MaterialTheme.typography.caption
+                )
             }
         }
         Box(modifier = Modifier.padding(start = 20.dp, top = 207.dp)) {

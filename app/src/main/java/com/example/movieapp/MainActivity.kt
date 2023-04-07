@@ -1,27 +1,52 @@
 package com.example.movieapp
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.movieapp.screens.home.HomeScreen
 import com.example.movieapp.screens.home.HomeViewModel
 import com.example.movieapp.ui.theme.MovieAppTheme
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MovieAppTheme {
-                MovieApp()
+                Scaffold(bottomBar = {
+                    BottomNavigation(backgroundColor = MaterialTheme.colors.primary, contentColor = Color.White) {
+                        BottomNavigationItem(selected = true, onClick = { /*TODO*/ }, icon = {
+                            Icon(
+                                imageVector = Icons.Default.TrendingUp,
+                                contentDescription = "Trending"
+                            )
+                        })
+                        BottomNavigationItem(selected = false, onClick = { /*TODO*/ }, icon = {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = "Trending"
+                            )
+                        })
+                        BottomNavigationItem(selected = false, onClick = { /*TODO*/ }, icon = {
+                            Icon(
+                                imageVector = Icons.Default.Person,
+                                contentDescription = "Trending"
+                            )
+                        })
+                    }
+                }) {
+                    MovieApp()
+                }
             }
         }
     }
@@ -29,6 +54,9 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MovieApp(homeViewModel: HomeViewModel = viewModel()) {
-    val results = homeViewModel.getTrending()
-    HomeScreen(results = results)
+    val resultsMovieWeek = homeViewModel.getTrendingMovieWeek()
+    val resultsMovieDay = homeViewModel.getTrendingMovieDay()
+    val resultsTvWeek = homeViewModel.getTrendingTvWeek()
+    val resultsTvDay = homeViewModel.getTrendingTvDay()
+    HomeScreen(resultsMovieWeek, resultsMovieDay, resultsTvWeek, resultsTvDay)
 }

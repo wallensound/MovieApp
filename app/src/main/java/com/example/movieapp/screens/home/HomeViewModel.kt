@@ -1,34 +1,63 @@
 package com.example.movieapp.screens.home
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movieapp.data.remote.Trending
 import com.example.movieapp.data.remote.Result
 import com.example.movieapp.data.repository.Repository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class HomeViewModel : ViewModel() {
 
     private val repository = Repository()
-    private val trending = mutableStateOf(Trending(0, emptyList(), 0, 0))
+    private val trendingMovieWeek = mutableStateOf(Trending(0, emptyList(), 0, 0))
+    private val trendingMovieDay = mutableStateOf(Trending(0, emptyList(), 0, 0))
+    private val trendingTvWeek = mutableStateOf(Trending(0, emptyList(), 0, 0))
+    private val trendingTvDay = mutableStateOf(Trending(0, emptyList(), 0, 0))
 
-    fun getTrending(): List<Result>{
+    fun getTrendingMovieWeek(): List<Result>{
 
         viewModelScope.launch {
-            val _trending = repository.getTrending()
-            if (_trending.isSuccessful && _trending.body() != null) {
-                trending.value = _trending.body()!!
+            val _trendingMovieWeek = repository.getTrendingMovieWeek()
+            if (_trendingMovieWeek.isSuccessful && _trendingMovieWeek.body() != null) {
+                trendingMovieWeek.value = _trendingMovieWeek.body()!!
             }
         }
-        return trending.value.results
+        return trendingMovieWeek.value.results
+    }
+
+    fun getTrendingMovieDay(): List<Result>{
+
+        viewModelScope.launch {
+            val _trendingMovieDay = repository.getTrendingMovieDay()
+            if (_trendingMovieDay.isSuccessful && _trendingMovieDay.body() != null) {
+                trendingMovieDay.value = _trendingMovieDay.body()!!
+            }
+        }
+        return trendingMovieDay.value.results
+    }
+
+    fun getTrendingTvWeek(): List<Result>{
+
+        viewModelScope.launch {
+            val _trendingTvWeek = repository.getTrendingTvWeek()
+            if (_trendingTvWeek.isSuccessful && _trendingTvWeek.body() != null) {
+                trendingTvWeek.value = _trendingTvWeek.body()!!
+            }
+        }
+        return trendingTvWeek.value.results
+    }
+
+    fun getTrendingTvDay(): List<Result>{
+
+        viewModelScope.launch {
+            val _trendingTvDay = repository.getTrendingTvDay()
+            if (_trendingTvDay.isSuccessful && _trendingTvDay.body() != null) {
+                trendingTvDay.value = _trendingTvDay.body()!!
+            }
+        }
+        return trendingTvDay.value.results
     }
 
 }
