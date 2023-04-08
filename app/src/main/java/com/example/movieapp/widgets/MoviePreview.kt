@@ -35,6 +35,7 @@ fun MoviePreview(result: Result) {
                 )
             }
             Column(Modifier.padding(top = 20.dp)) {
+                //Minska radavståndet i titeln och öka mellan titel och datum
                 Text(
                     text = if (result.title != null) result.title else result.name,
                     style = MaterialTheme.typography.subtitle1

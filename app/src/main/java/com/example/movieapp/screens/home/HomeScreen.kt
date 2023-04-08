@@ -55,8 +55,8 @@ fun HomeScreen(
         )
         LazyColumn(contentPadding = PaddingValues(bottom = 50.dp)) {
             item {
-                TrendingRow(results = resultsMovieWeek, headline = "Trending Movies this week")
-                TrendingRow(results = resultsMovieDay, headline = "Trending Movies today")
+                TrendingRow(results = resultsMovieWeek, headline = "Trending movies this week")
+                TrendingRow(results = resultsMovieDay, headline = "Trending movies today")
                 TrendingRow(results = resultsTvWeek, headline = "Trending TV shows this week")
                 TrendingRow(results = resultsTvDay, headline = "Trending TV shows today")
             }
