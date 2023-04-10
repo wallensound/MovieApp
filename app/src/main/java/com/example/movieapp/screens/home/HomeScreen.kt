@@ -23,19 +23,21 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.movieapp.MovieApp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.movieapp.R
 import com.example.movieapp.data.remote.Trending
 import com.example.movieapp.data.remote.Result
+import com.example.movieapp.navigation.Screen
 import com.example.movieapp.widgets.MoviePreview
+import com.example.movieapp.screens.home.HomeViewModel
 
 @Composable
-fun HomeScreen(
-    resultsMovieWeek: List<Result>?,
-    resultsMovieDay: List<Result>?,
-    resultsTvWeek: List<Result>?,
-    resultsTvDay: List<Result>?
-) {
+fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavController) {
+    val resultsMovieWeek = homeViewModel.getTrendingMovieWeek()
+    val resultsMovieDay = homeViewModel.getTrendingMovieDay()
+    val resultsTvWeek = homeViewModel.getTrendingTvWeek()
+    val resultsTvDay = homeViewModel.getTrendingTvDay()
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -55,17 +57,17 @@ fun HomeScreen(
         )
         LazyColumn(contentPadding = PaddingValues(bottom = 50.dp)) {
             item {
-                TrendingRow(results = resultsMovieWeek, headline = "Trending movies this week")
-                TrendingRow(results = resultsMovieDay, headline = "Trending movies today")
-                TrendingRow(results = resultsTvWeek, headline = "Trending TV shows this week")
-                TrendingRow(results = resultsTvDay, headline = "Trending TV shows today")
+                TrendingRow(results = resultsMovieWeek, headline = "Trending movies this week", navController = navController)
+                TrendingRow(results = resultsMovieDay, headline = "Trending movies today", navController = navController)
+                TrendingRow(results = resultsTvWeek, headline = "Trending TV shows this week", navController = navController)
+                TrendingRow(results = resultsTvDay, headline = "Trending TV shows today", navController = navController)
             }
         }
     }
 }
 
 @Composable
-fun TrendingRow(results: List<Result>?, headline: String) {
+fun TrendingRow(results: List<Result>?, headline: String, navController: NavController) {
     Text(text = headline, style = MaterialTheme.typography.h5, modifier = Modifier.padding(5.dp))
     if (results != null) {
         LazyRow(
@@ -83,7 +85,9 @@ fun TrendingRow(results: List<Result>?, headline: String) {
                 )
         ) {
             items(results) {
-                MoviePreview(it)
+                MoviePreview(it) {Id ->
+                    navController.navigate(Screen.DetailsScreen.route+"/$Id")
+                }
             }
         }
     }

@@ -18,15 +18,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.movieapp.data.remote.Result
+import com.example.movieapp.navigation.Screen
 
 @Composable
-fun MoviePreview(result: Result) {
+fun MoviePreview(result: Result, onItemClick: (Int) -> Unit) {
     Box(Modifier.padding(5.dp)) {
         Column(modifier = Modifier.width(150.dp)) {
             Surface(
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(16.dp))
-                    .clickable {  }
+                    .clickable { onItemClick(result.id) }
             ) {
                 Log.d("TAG", "MoviePreview: ${result.poster_path}")
                 AsyncImage(
