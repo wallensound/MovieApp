@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.movieapp.data.remote.Trending
 import com.example.movieapp.data.remote.Result
 import com.example.movieapp.data.repository.Repository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel() {
@@ -18,7 +19,7 @@ class HomeViewModel : ViewModel() {
 
     fun getTrendingMovieWeek(): List<Result>{
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val _trendingMovieWeek = repository.getTrendingMovieWeek()
             if (_trendingMovieWeek.isSuccessful && _trendingMovieWeek.body() != null) {
                 trendingMovieWeek.value = _trendingMovieWeek.body()!!
@@ -29,7 +30,7 @@ class HomeViewModel : ViewModel() {
 
     fun getTrendingMovieDay(): List<Result>{
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val _trendingMovieDay = repository.getTrendingMovieDay()
             if (_trendingMovieDay.isSuccessful && _trendingMovieDay.body() != null) {
                 trendingMovieDay.value = _trendingMovieDay.body()!!
@@ -40,7 +41,7 @@ class HomeViewModel : ViewModel() {
 
     fun getTrendingTvWeek(): List<Result>{
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val _trendingTvWeek = repository.getTrendingTvWeek()
             if (_trendingTvWeek.isSuccessful && _trendingTvWeek.body() != null) {
                 trendingTvWeek.value = _trendingTvWeek.body()!!
@@ -51,7 +52,7 @@ class HomeViewModel : ViewModel() {
 
     fun getTrendingTvDay(): List<Result>{
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val _trendingTvDay = repository.getTrendingTvDay()
             if (_trendingTvDay.isSuccessful && _trendingTvDay.body() != null) {
                 trendingTvDay.value = _trendingTvDay.body()!!

@@ -29,7 +29,6 @@ fun MoviePreview(result: Result, onItemClick: (Int) -> Unit) {
                     .clip(shape = RoundedCornerShape(16.dp))
                     .clickable { onItemClick(result.id) }
             ) {
-                Log.d("TAG", "MoviePreview: ${result.poster_path}")
                 AsyncImage(
                     model = "https://image.tmdb.org/t/p/w500${result.poster_path}",
                     contentDescription = "${result.title} poster"

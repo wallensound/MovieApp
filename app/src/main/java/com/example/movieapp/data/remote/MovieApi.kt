@@ -1,5 +1,9 @@
 package com.example.movieapp.data.remote
 
+import com.example.movieapp.data.remote.getmovie.Credits
+import com.example.movieapp.data.remote.getmovie.Images
+import com.example.movieapp.data.remote.getmovie.Movie
+import com.example.movieapp.data.remote.getmovie.Similar
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -17,29 +21,30 @@ interface MovieApi {
     ): Response<Trending>
 
     //Movie
-    @GET("/movie/{movieId}")
+    @GET("movie/{movieId}")
     suspend fun getMovie(
         @Path("movieId") movieId: Int,
-        @Query("api_key") apiKey: String
-    ): Response<Trending>
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String = "en-US"
+    ): Response<Movie>
 
-    @GET("/movie/{movieId}/credits")
+    @GET("movie/{movieId}/credits")
     suspend fun getMovieCredits(
         @Path("movieId") movieId: Int,
         @Query("api_key") apiKey: String
-    ): Response<Trending>
+    ): Response<Credits>
 
-    @GET("/movie/{movieId}/images")
+    @GET("movie/{movieId}/images")
     suspend fun getMovieImages(
         @Path("movieId") movieId: Int,
         @Query("api_key") apiKey: String
-    ): Response<Trending>
+    ): Response<Images>
 
-    @GET("/movie/{movieId}/similar")
+    @GET("movie/{movieId}/similar")
     suspend fun getMovieSimilar(
         @Path("movieId") movieId: Int,
         @Query("api_key") apiKey: String
-    ): Response<Trending>
+    ): Response<Similar>
 
     //Account
 //    @GET("/movie/{movieId}/account_states")
