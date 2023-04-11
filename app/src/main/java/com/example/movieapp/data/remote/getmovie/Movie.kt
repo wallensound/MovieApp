@@ -1,5 +1,6 @@
 package com.example.movieapp.data.remote.getmovie
 
+//TODO byt namn till MovieDTO, och sen ha en exstention function som heter MovieDetailsModel.
 data class Movie(
     val adult: Boolean,
     val backdrop_path: String,
@@ -17,7 +18,7 @@ data class Movie(
     val production_companies: List<ProductionCompany>,
     val production_countries: List<ProductionCountry>,
     val release_date: String,
-    val revenue: Int,
+    val revenue: Long,
     val runtime: Int,
     val spoken_languages: List<SpokenLanguage>,
     val status: String,

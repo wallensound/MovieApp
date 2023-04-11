@@ -1,6 +1,5 @@
 package com.example.movieapp.navigation
 
-import android.accounts.Account
 import android.annotation.SuppressLint
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -9,8 +8,6 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,7 +16,6 @@ import androidx.navigation.navArgument
 import com.example.movieapp.screens.account.AccountScreen
 import com.example.movieapp.screens.details.DetailsScreen
 import com.example.movieapp.screens.home.HomeScreen
-import com.example.movieapp.screens.home.HomeViewModel
 import com.example.movieapp.screens.search.SearchScreen
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -57,6 +53,7 @@ fun Navigation() {
             })
         }
     }) {
+        // it är padding för bottum och top bar, så kör modifier padding på navhost
         NavHost(navController = navController, startDestination = Screen.HomeScreen.route) {
             composable(route = Screen.HomeScreen.route) {
                 HomeScreen(navController = navController)

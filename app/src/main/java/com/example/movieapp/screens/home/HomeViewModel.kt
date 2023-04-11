@@ -3,8 +3,8 @@ package com.example.movieapp.screens.home
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.movieapp.data.remote.Trending
 import com.example.movieapp.data.remote.Result
+import com.example.movieapp.data.remote.Trending
 import com.example.movieapp.data.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,12 +18,16 @@ class HomeViewModel : ViewModel() {
     private val trendingTvDay = mutableStateOf(Trending(0, emptyList(), 0, 0))
 
     fun getTrendingMovieWeek(): List<Result>{
-
+        // laddindikator
         viewModelScope.launch(Dispatchers.IO) {
+            //ta bort understrecken
             val _trendingMovieWeek = repository.getTrendingMovieWeek()
             if (_trendingMovieWeek.isSuccessful && _trendingMovieWeek.body() != null) {
                 trendingMovieWeek.value = _trendingMovieWeek.body()!!
+            } else {
+                //det sket sig, pröva igen. Kanske en knapp som försöker hämta listan igen
             }
+            // ta bort laddindikator
         }
         return trendingMovieWeek.value.results
     }
