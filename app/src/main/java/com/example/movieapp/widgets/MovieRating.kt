@@ -1,11 +1,11 @@
 package com.example.movieapp.widgets
 
-import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -41,9 +41,10 @@ fun MovieRating(rating: Double, size: Float) {
     }
     Box(contentAlignment = Alignment.Center,
     modifier = Modifier.size(100.dp * size)) {
+        val backgroundColor = MaterialTheme.colors.primary
         Canvas(modifier = Modifier.size(100.dp * size)) {
             drawCircle(
-                color = Color.DarkGray,
+                color = backgroundColor,
                 radius = 180f * size
             )
             drawArc(

@@ -7,12 +7,17 @@ import com.example.movieapp.data.remote.Result
 import com.example.movieapp.data.remote.getmovie.Credits
 import com.example.movieapp.data.remote.getmovie.Movie
 import com.example.movieapp.data.remote.getmovie.Similar
+import com.example.movieapp.data.remote.gettv.CreditsTV
+import com.example.movieapp.data.remote.gettv.SimilarTV
+import com.example.movieapp.data.remote.gettv.TV
 import com.example.movieapp.data.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class DetailsViewModel : ViewModel() {
     private val repository = Repository()
+
+    //Movie
     private val movie = mutableStateOf(
         Movie(
             "",
@@ -57,6 +62,41 @@ class DetailsViewModel : ViewModel() {
             }
         }
         return similar.value.results
+    }
+
+
+    //TV
+    private val tv = mutableStateOf(TV("", "", emptyList(), 0, "", "", 0.0))
+    private val tvCredits = mutableStateOf(CreditsTV(emptyList(), 0))
+    private val tvSimilar = mutableStateOf(SimilarTV(emptyList()))
+    fun getTV(Id: Int): TV {
+        viewModelScope.launch(Dispatchers.IO) {
+            val _tv = repository.getTV(Id)
+            if (_tv.isSuccessful && _tv.body() != null) {
+                tv.value = _tv.body()!!
+            }
+        }
+        return tv.value
+    }
+
+    fun getTVCredits(Id: Int): CreditsTV {
+        viewModelScope.launch(Dispatchers.IO) {
+            val _tvCredits = repository.getTVCredits(Id)
+            if (_tvCredits.isSuccessful && _tvCredits.body() != null) {
+                tvCredits.value = _tvCredits.body()!!
+            }
+        }
+        return tvCredits.value
+    }
+
+    fun getTVSimilar(Id: Int): List<Result> {
+        viewModelScope.launch(Dispatchers.IO) {
+            val _tvSimilar = repository.getTVSimilar(Id)
+            if (_tvSimilar.isSuccessful && _tvSimilar.body() != null) {
+                tvSimilar.value = _tvSimilar.body()!!
+            }
+        }
+        return tvSimilar.value.results
     }
 
 }

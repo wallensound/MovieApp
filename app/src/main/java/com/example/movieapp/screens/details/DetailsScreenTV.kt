@@ -25,7 +25,7 @@ import com.example.movieapp.widgets.MovieRating
 import com.example.movieapp.widgets.TrendingRow
 
 @Composable
-fun DetailsScreen(
+fun DetailsScreenTV(
     detailsViewModel: DetailsViewModel = viewModel(),
     navController: NavController,
     id: Int?
@@ -46,43 +46,38 @@ fun DetailsScreen(
         Text(text = "movieId == null")
     } else {
 
-        val movie = detailsViewModel.getMovie(id)
-        val credits = detailsViewModel.getMovieCredits(id)
-        val similar = detailsViewModel.getMovieSimilar(id)
+        val tv = detailsViewModel.getTV(id)
+        val credits = detailsViewModel.getTVCredits(id)
+        val similar = detailsViewModel.getTVSimilar(id)
 
         Column(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
                 modifier = Modifier.height(100.dp),
                 contentScale = ContentScale.FillWidth,
-                model = "https://image.tmdb.org/t/p/original${movie.backdrop_path}",
-                contentDescription = "${movie.title} poster",
+                model = "https://image.tmdb.org/t/p/original${tv.backdrop_path}",
+                contentDescription = "${tv.name} poster",
             )
             LazyColumn() {
                 item {
                     Column(modifier = Modifier.padding(top = 20.dp, start = 5.dp, end = 5.dp)) {
                         Text(
                             // gör om till date? matte säger skit i det nu
-                            text = "${movie.title} (${movie.release_date.dropLast(6)})",
+                            text = "${tv.name} (${tv.first_air_date.dropLast(6)})",
                             style = MaterialTheme.typography.h5,
                         )
                         Row() {
-                            movie.genres.forEach { genre ->
+                            tv.genres.forEach { genre ->
                                 Text(
                                     text = "${genre.name}, ",
                                     style = MaterialTheme.typography.caption,
                                     color = Color(red = 0f, green = 0f, blue = 0f, alpha = 0.4f)
                                 )
                             }
-                            Text(
-                                text = "${movie.runtime / 60}h ${movie.runtime % 60}m",
-                                style = MaterialTheme.typography.caption,
-                                color = Color(red = 0f, green = 0f, blue = 0f, alpha = 0.4f)
-                            )
                         }
                     }
                     Column(modifier = Modifier.padding(top = 20.dp, start = 5.dp, end = 5.dp)) {
                         Text(text = "Summary", style = MaterialTheme.typography.h6)
-                        Text(text = movie.overview, style = MaterialTheme.typography.body1)
+                        Text(text = tv.overview, style = MaterialTheme.typography.body1)
                     }
                     Text(
                         text = "Actors",
@@ -92,6 +87,7 @@ fun DetailsScreen(
                     LazyRow(
                         modifier = Modifier
                             .height(310.dp)
+                            .fillMaxWidth()
                             .background(
                                 brush = Brush.verticalGradient(
                                     colors = listOf(
@@ -113,7 +109,7 @@ fun DetailsScreen(
                                     ) {
                                         AsyncImage(
                                             model = "https://image.tmdb.org/t/p/w500${it.profile_path}",
-                                            contentDescription = "${movie.title} poster",
+                                            contentDescription = "${tv.name} poster",
                                             contentScale = ContentScale.Crop
                                         )
                                     }
@@ -136,7 +132,7 @@ fun DetailsScreen(
                         results = similar,
                         headline = "Similar",
                         navController = navController,
-                        movie = true
+                        movie = false
                     )
                 }
 
@@ -162,7 +158,7 @@ fun DetailsScreen(
                 .padding(top = 75.dp, start = 10.dp, end = 10.dp),
             contentAlignment = Alignment.CenterStart
         ) {
-            MovieRating(rating = movie.vote_average, size = 0.4f)
+            MovieRating(rating = tv.vote_average, size = 0.4f)
             Box(contentAlignment = Alignment.CenterEnd, modifier = Modifier.fillMaxWidth()) {
                 Button(onClick = { /*TODO*/ }, shape = CircleShape) {
                     Icon(

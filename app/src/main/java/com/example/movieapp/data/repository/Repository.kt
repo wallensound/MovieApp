@@ -16,4 +16,9 @@ class Repository {
     suspend fun getMovieCredits(movieId: Int) = movieApi.getMovieCredits(movieId, apiKey)
     suspend fun getMovieSimilar(movieId: Int) = movieApi.getMovieSimilar(movieId, apiKey)
 
+    //TV
+    suspend fun getTV(TVId: Int) = movieApi.getTV(TVId, apiKey)
+    suspend fun getTVCredits(TVId: Int) = movieApi.getTVCredits(TVId, apiKey)
+    suspend fun getTVSimilar(TVId: Int) = movieApi.getTVSimilar(TVId, apiKey)
+
 }

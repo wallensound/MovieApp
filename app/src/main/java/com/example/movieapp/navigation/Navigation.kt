@@ -17,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.movieapp.screens.account.AccountScreen
 import com.example.movieapp.screens.details.DetailsScreen
+import com.example.movieapp.screens.details.DetailsScreenTV
 import com.example.movieapp.screens.home.HomeScreen
 import com.example.movieapp.screens.search.SearchScreen
 
@@ -69,6 +70,11 @@ fun Navigation() {
                 type = NavType.IntType
             })) {
                 DetailsScreen(id = it.arguments?.getInt("id"), navController = navController)
+            }
+            composable(route = Screen.DetailsScreenTV.route+"/{id}", arguments = listOf(navArgument("id"){
+                type = NavType.IntType
+            })) {
+                DetailsScreenTV(id = it.arguments?.getInt("id"), navController = navController)
             }
         }
     }
