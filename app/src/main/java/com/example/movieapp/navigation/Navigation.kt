@@ -61,7 +61,7 @@ fun Navigation() {
                 HomeScreen(navController = navController)
             }
             composable(route = Screen.SearchScreen.route) {
-                SearchScreen()
+                SearchScreen(navController = navController)
             }
             composable(route = Screen.AccountScreen.route) {
                 AccountScreen()

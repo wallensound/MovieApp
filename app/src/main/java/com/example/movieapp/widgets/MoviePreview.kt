@@ -47,3 +47,35 @@ fun MoviePreview(result: Result, onItemClick: (Int) -> Unit) {
         }
     }
 }
+
+@Composable
+fun MoviePreview(result: com.example.movieapp.data.remote.getsearch.Result, onItemClick: (Int) -> Unit) {
+        Column(modifier = Modifier.width(150.dp)) {
+            Surface(
+                modifier = Modifier
+                    .clip(shape = RoundedCornerShape(16.dp))
+                    .clickable { onItemClick(result.id) }
+                    .height(225.dp)
+            ) {
+                AsyncImage(
+                    model = "https://image.tmdb.org/t/p/w500${result.poster_path}",
+                    contentDescription = "${result.title} poster",
+                    contentScale = ContentScale.Crop
+                )
+            }
+            Column(Modifier.padding(top = 20.dp)) {
+                //Minska radavståndet i titeln och öka mellan titel och datum
+                Text(
+                    text = if (result.title != null) result.title else result.name,
+                    style = MaterialTheme.typography.subtitle1
+                )
+                Text(
+                    text = if (result.release_date != null) result.release_date else result.first_air_date,
+                    style = MaterialTheme.typography.caption
+                )
+            }
+        }
+        Box(modifier = Modifier.padding(start = 20.dp, top = 207.dp)) {
+            MovieRating(rating = result.vote_average, size = 0.34f)
+        }
+}

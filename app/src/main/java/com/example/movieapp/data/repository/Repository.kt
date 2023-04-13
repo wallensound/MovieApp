@@ -21,4 +21,7 @@ class Repository {
     suspend fun getTVCredits(TVId: Int) = movieApi.getTVCredits(TVId, apiKey)
     suspend fun getTVSimilar(TVId: Int) = movieApi.getTVSimilar(TVId, apiKey)
 
+    //Search
+    suspend fun getSearch(query: String) = movieApi.getSearch(query = query, apiKey = apiKey)
+
 }
