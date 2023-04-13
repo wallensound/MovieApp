@@ -1,12 +1,10 @@
 package com.example.movieapp.data.remote
 
 import com.example.movieapp.data.remote.getmovie.Credits
-import com.example.movieapp.data.remote.getmovie.Images
 import com.example.movieapp.data.remote.getmovie.Movie
 import com.example.movieapp.data.remote.getmovie.Similar
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -33,12 +31,6 @@ interface MovieApi {
         @Path("movieId") movieId: Int,
         @Query("api_key") apiKey: String
     ): Response<Credits>
-
-    @GET("movie/{movieId}/images")
-    suspend fun getMovieImages(
-        @Path("movieId") movieId: Int,
-        @Query("api_key") apiKey: String
-    ): Response<Images>
 
     @GET("movie/{movieId}/similar")
     suspend fun getMovieSimilar(

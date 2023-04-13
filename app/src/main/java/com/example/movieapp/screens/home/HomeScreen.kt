@@ -2,7 +2,10 @@ package com.example.movieapp.screens.home
 
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -45,7 +48,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavCon
                     )
                 )
         )
-        LazyColumn(contentPadding = PaddingValues(bottom = 50.dp)) {
+        LazyColumn() {
             item {
                 TrendingRow(results = resultsMovieWeek, headline = stringResource(R.string.trending_movies_this_week), navController = navController)
                 //Todo change to resource, no text in code
@@ -58,7 +61,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavCon
 }
 
 @Composable
-private fun TrendingRow(results: List<Result>?, headline: String, navController: NavController) {
+fun TrendingRow(results: List<Result>, headline: String, navController: NavController) {
     Text(text = headline, style = MaterialTheme.typography.h5, modifier = Modifier.padding(5.dp))
     if (results != null) {
         LazyRow(

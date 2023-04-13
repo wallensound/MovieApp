@@ -17,11 +17,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.movieapp.screens.home.TrendingRow
 import com.example.movieapp.widgets.MovieRating
 
 @Composable
-fun DetailsScreen(detailsViewModel: DetailsViewModel = viewModel(), id: Int?) {
+fun DetailsScreen(detailsViewModel: DetailsViewModel = viewModel(), navController: NavController, id: Int?) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -40,6 +42,7 @@ fun DetailsScreen(detailsViewModel: DetailsViewModel = viewModel(), id: Int?) {
 
         val movie = detailsViewModel.getMovie(id)
         val credits = detailsViewModel.getMovieCredits(id)
+        val similar = detailsViewModel.getMovieSimilar(id)
 
         Column(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
@@ -127,6 +130,7 @@ fun DetailsScreen(detailsViewModel: DetailsViewModel = viewModel(), id: Int?) {
                             }
                         }
                     }
+                    TrendingRow(results = similar, headline = "Similar", navController = navController)
                 }
 
             }

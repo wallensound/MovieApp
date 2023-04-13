@@ -1,12 +1,14 @@
 package com.example.movieapp.navigation
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -53,8 +55,7 @@ fun Navigation() {
             })
         }
     }) {
-        // it är padding för bottum och top bar, så kör modifier padding på navhost
-        NavHost(navController = navController, startDestination = Screen.HomeScreen.route) {
+        NavHost(navController = navController, startDestination = Screen.HomeScreen.route, modifier = Modifier.padding(it)) {
             composable(route = Screen.HomeScreen.route) {
                 HomeScreen(navController = navController)
             }
@@ -67,7 +68,7 @@ fun Navigation() {
             composable(route = Screen.DetailsScreen.route+"/{id}", arguments = listOf(navArgument("id"){
                 type = NavType.IntType
             })) {
-                DetailsScreen(id = it.arguments?.getInt("id"))
+                DetailsScreen(id = it.arguments?.getInt("id"), navController = navController)
             }
         }
     }

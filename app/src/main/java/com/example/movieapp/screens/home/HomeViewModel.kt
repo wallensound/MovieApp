@@ -12,10 +12,10 @@ import kotlinx.coroutines.launch
 class HomeViewModel : ViewModel() {
 
     private val repository = Repository()
-    private val trendingMovieWeek = mutableStateOf(Trending(0, emptyList(), 0, 0))
-    private val trendingMovieDay = mutableStateOf(Trending(0, emptyList(), 0, 0))
-    private val trendingTvWeek = mutableStateOf(Trending(0, emptyList(), 0, 0))
-    private val trendingTvDay = mutableStateOf(Trending(0, emptyList(), 0, 0))
+    private val trendingMovieWeek = mutableStateOf(Trending(emptyList()))
+    private val trendingMovieDay = mutableStateOf(Trending(emptyList()))
+    private val trendingTvWeek = mutableStateOf(Trending(emptyList()))
+    private val trendingTvDay = mutableStateOf(Trending(emptyList()))
 
     fun getTrendingMovieWeek(): List<Result>{
         // laddindikator
