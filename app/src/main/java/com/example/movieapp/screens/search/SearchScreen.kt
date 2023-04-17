@@ -21,11 +21,15 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.movieapp.navigation.Screen
 import com.example.movieapp.widgets.MoviePreview
+import com.example.movieapp.widgets.ToggleButton
 
 @Composable
 fun SearchScreen(searchViewModel: SearchViewModel = viewModel(), navController: NavController) {
 
     val results = searchViewModel.results
+    val allState = searchViewModel.allState
+    val movieState = searchViewModel.movieState
+    val tvState = searchViewModel.tvState
 
     Surface(
         modifier = Modifier
@@ -47,9 +51,9 @@ fun SearchScreen(searchViewModel: SearchViewModel = viewModel(), navController: 
             Column(modifier = Modifier
                 .background(MaterialTheme.colors.primary)
                 .fillMaxWidth()
-                .padding(10.dp),) {
+                .padding(1.dp),) {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(top = 5.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
@@ -70,18 +74,25 @@ fun SearchScreen(searchViewModel: SearchViewModel = viewModel(), navController: 
                     }
                 }
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 10.dp),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Button(onClick = { /*TODO*/ }) {
-                        Text(text = "all")
+                    val space = 38.dp
+                    ToggleButton(state = allState.value, text = "all") {
+                        searchViewModel.setState("all")
+                        searchViewModel.getResult(searchViewModel.query.value.text)
                     }
-                    Button(onClick = { /*TODO*/ }) {
-                        Text(text = "movie")
+                    Spacer(modifier = Modifier.width(space))
+                    ToggleButton(state = movieState.value, text = "movie") {
+                        searchViewModel.setState("movie")
+                        searchViewModel.getResult(searchViewModel.query.value.text)
                     }
-                    Button(onClick = { /*TODO*/ }) {
-                        Text(text = "tv")
+                    Spacer(modifier = Modifier.width(space))
+                    ToggleButton(state = tvState.value, text = "tv") {
+                        searchViewModel.setState("tv")
+                        searchViewModel.getResult(searchViewModel.query.value.text)
                     }
                 }
 

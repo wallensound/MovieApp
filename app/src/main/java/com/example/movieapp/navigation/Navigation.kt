@@ -64,7 +64,7 @@ fun Navigation() {
                 SearchScreen(navController = navController)
             }
             composable(route = Screen.AccountScreen.route) {
-                AccountScreen()
+                AccountScreen(navController = navController)
             }
             composable(route = Screen.DetailsScreen.route+"/{id}", arguments = listOf(navArgument("id"){
                 type = NavType.IntType

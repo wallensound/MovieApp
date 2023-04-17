@@ -1,5 +1,8 @@
 package com.example.movieapp.data.remote
 
+import com.example.movieapp.data.remote.authentication.PostRequestToken
+import com.example.movieapp.data.remote.authentication.RequestToken
+import com.example.movieapp.data.remote.authentication.Session
 import com.example.movieapp.data.remote.getaccount.Account
 import com.example.movieapp.data.remote.getaccount.MovieWatchList
 import com.example.movieapp.data.remote.getaccount.TVWatchList
@@ -11,10 +14,7 @@ import com.example.movieapp.data.remote.gettv.CreditsTV
 import com.example.movieapp.data.remote.gettv.SimilarTV
 import com.example.movieapp.data.remote.gettv.TV
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface MovieApi {
 
@@ -98,14 +98,17 @@ interface MovieApi {
 
     @GET("account/{account_id}/watchlist/movies")
     suspend fun getMovieWatchlist(
-        @Path("account_id") movieId: Int,
-        @Query("api_key") apiKey: String
+        @Path("account_id") accountId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String = "en-US",
+        @Query("session_id") sessionId: String,
+        @Query("sort_by") sortBy: String = "created_at.asc"
     ): Response<MovieWatchList>
 
     @GET("account/{account_id}/watchlist/tv")
     suspend fun getTVWatchlist(
         @Path("account_id") movieId: Int,
-        @Query("api_key") apiKey: String
+        @Query("api_key") apiKey: String,
     ): Response<TVWatchList>
 
     @POST("account/{account_id}/watchlist")
@@ -114,4 +117,15 @@ interface MovieApi {
         @Query("api_key") apiKey: String,
     ): Response<Trending>
 
+    //Authentication
+    @GET("authentication/token/new")
+    suspend fun getRequestToken(
+        @Query("api_key") apiKey: String
+    ): Response<RequestToken>
+
+    @POST("authentication/session/new")
+    suspend fun postCreateSession(
+        @Body requestToken: PostRequestToken,
+        @Query("api_key") apiKey: String
+    ): Response<Session>
 }

@@ -16,7 +16,29 @@ class SearchViewModel : ViewModel() {
     private val search = mutableStateOf(Search(emptyList()))
     val query = mutableStateOf(TextFieldValue(""))
     private val _results = mutableStateListOf<Result>()
-    val results: List<Result> = _results
+    var results: List<Result> = _results
+    val allState = mutableStateOf(true)
+    val movieState = mutableStateOf(false)
+    val tvState = mutableStateOf(false)
+
+    fun setState(filterBy: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (filterBy == "movie") {
+                allState.value = false
+                movieState.value = true
+                tvState.value = false
+            } else if (filterBy == "tv") {
+                allState.value = false
+                movieState.value = false
+                tvState.value = true
+            } else {
+                allState.value = true
+                movieState.value = false
+                tvState.value = false
+            }
+
+        }
+    }
 
     fun getResult(query: String){
         viewModelScope.launch(Dispatchers.IO) {
@@ -26,7 +48,13 @@ class SearchViewModel : ViewModel() {
             }
             _results.clear()
             _results.addAll(search.value.results.filter {
-                it.media_type == "movie" || it.media_type == "tv"
+                if (movieState.value) {
+                    it.media_type == "movie"
+                } else if (tvState.value) {
+                    it.media_type == "tv"
+                } else {
+                    it.media_type == "movie" || it.media_type == "tv"
+                }
             })
         }
     }
