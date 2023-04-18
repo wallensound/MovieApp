@@ -35,7 +35,8 @@ class Repository {
     suspend fun getMovieWatchlist(accountId: Int, sessionId: String) =
         movieApi.getMovieWatchlist(accountId = accountId, sessionId = sessionId, apiKey = apiKey)
 
-    suspend fun getTVWatchlist(accountId: Int) = movieApi.getTVWatchlist(accountId, apiKey)
+    suspend fun getTVWatchlist(accountId: Int, sessionId: String) =
+        movieApi.getTVWatchlist(accountId = accountId, sessionId = sessionId, apiKey = apiKey)
 
     //Authentication
     suspend fun getRequestToken() = movieApi.getRequestToken(apiKey)

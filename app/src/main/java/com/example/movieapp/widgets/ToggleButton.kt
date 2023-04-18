@@ -6,12 +6,14 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ToggleButton(state: Boolean, text: String, onClick: () -> Unit) {
+fun ToggleButton(modifier: Modifier = Modifier, state: Boolean, text: String, onClick: () -> Unit) {
     Button(
+        modifier = modifier,
         onClick = { onClick() },
         colors = ButtonDefaults.buttonColors(
             backgroundColor = if (state) {

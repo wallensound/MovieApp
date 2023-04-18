@@ -17,6 +17,7 @@ class HomeViewModel : ViewModel() {
     private val trendingTvWeek = mutableStateOf(Trending(emptyList()))
     private val trendingTvDay = mutableStateOf(Trending(emptyList()))
 
+
     fun getTrendingMovieWeek(): List<Result>{
         // laddindikator
         viewModelScope.launch(Dispatchers.IO) {

@@ -107,8 +107,11 @@ interface MovieApi {
 
     @GET("account/{account_id}/watchlist/tv")
     suspend fun getTVWatchlist(
-        @Path("account_id") movieId: Int,
+        @Path("account_id") accountId: Int,
         @Query("api_key") apiKey: String,
+        @Query("language") language: String = "en-US",
+        @Query("session_id") sessionId: String,
+        @Query("sort_by") sortBy: String = "created_at.asc"
     ): Response<TVWatchList>
 
     @POST("account/{account_id}/watchlist")
