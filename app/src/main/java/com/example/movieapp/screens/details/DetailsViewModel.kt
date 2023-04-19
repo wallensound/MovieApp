@@ -1,6 +1,9 @@
 package com.example.movieapp.screens.details
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movieapp.data.remote.Result
@@ -12,10 +15,18 @@ import com.example.movieapp.data.remote.gettv.SimilarTV
 import com.example.movieapp.data.remote.gettv.TV
 import com.example.movieapp.data.repository.Repository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class DetailsViewModel : ViewModel() {
-    private val repository = Repository()
+class DetailsViewModel(private val repository: Repository, private val dataStore: DataStore<Preferences>) : ViewModel() {
+
+    val sessionIdKey = stringPreferencesKey("sessionIdKey")
+    val sessionIdFlow: Flow<String> = dataStore.data
+        .map { preferences ->
+            // No type safety.
+            preferences[sessionIdKey] ?: "null"
+        }
 
     //Movie
     private val movie = mutableStateOf(

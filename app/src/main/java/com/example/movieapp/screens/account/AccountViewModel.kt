@@ -2,6 +2,10 @@ package com.example.movieapp.screens.account
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movieapp.data.remote.Result
@@ -13,27 +17,37 @@ import com.example.movieapp.data.remote.getaccount.MovieWatchList
 import com.example.movieapp.data.remote.getaccount.TVWatchList
 import com.example.movieapp.data.repository.Repository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class AccountViewModel : ViewModel() {
-    private val repository = Repository()
-    val requestToken = mutableStateOf(RequestToken("","",false))
-    val session = mutableStateOf(Session("", false))
-    private val account = mutableStateOf(Account(0,""))
+class AccountViewModel(
+    private val repository: Repository,
+    private val dataStore: DataStore<Preferences>
+) : ViewModel() {
+
+    val sessionIdKey = stringPreferencesKey("sessionIdKey")
+    val sessionIdFlow: Flow<String> = dataStore.data
+        .map { preferences ->
+            // No type safety.
+            preferences[sessionIdKey] ?: "null"
+        }
+
+    val requestToken = mutableStateOf(RequestToken("", "", false))
+    private val session = mutableStateOf(Session("", false))
+    private val account = mutableStateOf(Account(0, ""))
     private val movieWatchlist = mutableStateOf(MovieWatchList(emptyList()))
     private val tvWatchlist = mutableStateOf(TVWatchList(emptyList()))
     val filterState = mutableStateOf(true)
 
-    override fun onCleared() {
-        Log.d("hejan", "hejsan")
-        super.onCleared()
-    }
     fun setState() {
         filterState.value = !filterState.value
     }
 
     fun getRequestToken() {
-        requestToken.value = RequestToken("","",false)
+
+        requestToken.value = RequestToken("", "", false)
         viewModelScope.launch(Dispatchers.IO) {
             val _requestToken = repository.getRequestToken()
             if (_requestToken.body() != null) {
@@ -52,28 +66,28 @@ class AccountViewModel : ViewModel() {
             if (_session.body() != null) {
                 session.value = _session.body()!!
                 Log.d("TAG", "getRequestToken: $session")
+                dataStore.edit {
+                    it[sessionIdKey] = session.value.session_id
+                }
             }
         }
     }
 
     fun getAccount(): Account {
-        if (session.value.success) {
             viewModelScope.launch(Dispatchers.IO) {
-                val _account = repository.getAccount(session.value.session_id)
+                val _account = repository.getAccount(sessionIdFlow.first())
                 if (_account.body() != null) {
                     account.value = _account.body()!!
                     Log.d("TAG", "getRequestToken: $account")
                 }
             }
-        } else {
-            Log.d("TAG", "getAccount: no valid sessionid")
-        }
         return account.value
     }
 
     fun getMovieWatchlist(): List<Result> {
         viewModelScope.launch(Dispatchers.IO) {
-            val _movieWatchlist = repository.getMovieWatchlist(account.value.id, session.value.session_id)
+            val _movieWatchlist =
+                repository.getMovieWatchlist(account.value.id, sessionIdFlow.first())
             if (_movieWatchlist.isSuccessful && _movieWatchlist.body() != null) {
                 movieWatchlist.value = _movieWatchlist.body()!!
             }
@@ -83,7 +97,7 @@ class AccountViewModel : ViewModel() {
 
     fun getTVWatchlist(): List<Result> {
         viewModelScope.launch(Dispatchers.IO) {
-            val _tvWatchlist = repository.getTVWatchlist(account.value.id, session.value.session_id)
+            val _tvWatchlist = repository.getTVWatchlist(account.value.id, sessionIdFlow.first())
             if (_tvWatchlist.isSuccessful && _tvWatchlist.body() != null) {
                 tvWatchlist.value = _tvWatchlist.body()!!
             }

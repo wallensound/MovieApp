@@ -2,7 +2,6 @@ package com.example.movieapp.screens.account
 
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -13,22 +12,24 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.movieapp.navigation.Screen
 import com.example.movieapp.widgets.MoviePreview
 import com.example.movieapp.widgets.ToggleButton
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AccountScreen(accountViewModel: AccountViewModel = viewModel(), navController: NavController) {
+fun AccountScreen(accountViewModel: AccountViewModel = koinViewModel(), navController: NavController) {
 
-    Log.d("TAG", "AccountScreen: ${accountViewModel.session.value.success}")
+    val sessionId = accountViewModel.sessionIdFlow.collectAsState(initial = "null")
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -46,7 +47,8 @@ fun AccountScreen(accountViewModel: AccountViewModel = viewModel(), navControlle
                 )
         )
         Column() {
-            if (!accountViewModel.session.value.success) {
+            if (sessionId.value == "null") {
+                Text(text = "Session ID: ${sessionId.value}")
                 Login(accountViewModel)
             } else {
                 Account(accountViewModel, navController)

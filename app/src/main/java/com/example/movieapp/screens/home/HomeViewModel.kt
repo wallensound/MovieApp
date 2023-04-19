@@ -9,14 +9,12 @@ import com.example.movieapp.data.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(private val repository: Repository) : ViewModel() {
 
-    private val repository = Repository()
     private val trendingMovieWeek = mutableStateOf(Trending(emptyList()))
     private val trendingMovieDay = mutableStateOf(Trending(emptyList()))
     private val trendingTvWeek = mutableStateOf(Trending(emptyList()))
     private val trendingTvDay = mutableStateOf(Trending(emptyList()))
-
 
     fun getTrendingMovieWeek(): List<Result>{
         // laddindikator

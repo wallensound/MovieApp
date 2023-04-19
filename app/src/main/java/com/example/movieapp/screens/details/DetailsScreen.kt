@@ -18,15 +18,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.movieapp.widgets.MovieRating
 import com.example.movieapp.widgets.TrendingRow
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DetailsScreen(
-    detailsViewModel: DetailsViewModel = viewModel(),
+    detailsViewModel: DetailsViewModel = koinViewModel(),
     navController: NavController,
     id: Int?
 ) {

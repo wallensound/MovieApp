@@ -11,13 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.movieapp.R
 import com.example.movieapp.widgets.TrendingRow
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavController) {
+fun HomeScreen(homeViewModel: HomeViewModel = koinViewModel(), navController: NavController) {
     val resultsMovieWeek = homeViewModel.getTrendingMovieWeek()
     val resultsMovieDay = homeViewModel.getTrendingMovieDay()
     val resultsTvWeek = homeViewModel.getTrendingTvWeek()

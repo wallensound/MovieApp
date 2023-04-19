@@ -18,15 +18,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.movieapp.widgets.MovieRating
 import com.example.movieapp.widgets.TrendingRow
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DetailsScreenTV(
-    detailsViewModel: DetailsViewModel = viewModel(),
+    detailsViewModel: DetailsViewModel = koinViewModel(),
     navController: NavController,
     id: Int?
 ) {
@@ -73,6 +73,11 @@ fun DetailsScreenTV(
                                     color = Color(red = 0f, green = 0f, blue = 0f, alpha = 0.4f)
                                 )
                             }
+                            Text(
+                                text = tv.first_air_date,
+                                style = MaterialTheme.typography.caption,
+                                color = Color(red = 0f, green = 0f, blue = 0f, alpha = 0.4f)
+                            )
                         }
                     }
                     Column(modifier = Modifier.padding(top = 20.dp, start = 5.dp, end = 5.dp)) {

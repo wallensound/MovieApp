@@ -17,14 +17,14 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.movieapp.navigation.Screen
 import com.example.movieapp.widgets.MoviePreview
 import com.example.movieapp.widgets.ToggleButton
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun SearchScreen(searchViewModel: SearchViewModel = viewModel(), navController: NavController) {
+fun SearchScreen(searchViewModel: SearchViewModel = koinViewModel(), navController: NavController) {
 
     val results = searchViewModel.results
     val allState = searchViewModel.allState
@@ -53,7 +53,9 @@ fun SearchScreen(searchViewModel: SearchViewModel = viewModel(), navController: 
                 .fillMaxWidth()
                 .padding(1.dp),) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 5.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 5.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {

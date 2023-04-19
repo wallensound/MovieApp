@@ -11,8 +11,7 @@ import com.example.movieapp.data.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SearchViewModel : ViewModel() {
-    private val repository = Repository()
+class SearchViewModel(private val repository: Repository) : ViewModel() {
     private val search = mutableStateOf(Search(emptyList()))
     val query = mutableStateOf(TextFieldValue(""))
     private val _results = mutableStateListOf<Result>()
@@ -23,18 +22,22 @@ class SearchViewModel : ViewModel() {
 
     fun setState(filterBy: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (filterBy == "movie") {
-                allState.value = false
-                movieState.value = true
-                tvState.value = false
-            } else if (filterBy == "tv") {
-                allState.value = false
-                movieState.value = false
-                tvState.value = true
-            } else {
-                allState.value = true
-                movieState.value = false
-                tvState.value = false
+            when (filterBy) {
+                "movie" -> {
+                    allState.value = false
+                    movieState.value = true
+                    tvState.value = false
+                }
+                "tv" -> {
+                    allState.value = false
+                    movieState.value = false
+                    tvState.value = true
+                }
+                else -> {
+                    allState.value = true
+                    movieState.value = false
+                    tvState.value = false
+                }
             }
 
         }
