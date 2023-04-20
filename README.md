@@ -7,8 +7,16 @@ All the data shown on every screen are gathered asynchronously with coroutines f
 
 The application consists of 4 main screens in total, the landing screen: **Trending**, **Details**, **Search** and lastly **Account**
 
+### Walkthrough Video
+
+https://user-images.githubusercontent.com/88088759/233361330-ab87edc3-5a67-46b4-8f8c-0251ba2108e8.mp4
+
 ## Trending Screen
-The Trending screen consists of one LazyColumn and four LazyRows. The rating widget is probably my favourite part of this screen due to the animation I created for it, where the circle fills up. Each movie and tv show are clickable and will navigate you to either the DetailsScreen or the DetailsScreenTV (TV containing some adjustments specific to the Data received for TV shows from the API).
+The Trending screen consists of one LazyColumn and four LazyRows. The rating widget is probably my favourite part of this screen due to the animation I created for it, where the circle fills up. 
+
+![ezgif com-video-to-gif](https://user-images.githubusercontent.com/88088759/233360912-0fa60f93-8d08-453c-afe8-124c623ae2cc.gif)
+
+Each movie and tv show are clickable and will navigate you to either the DetailsScreen or the DetailsScreenTV (TV containing some adjustments specific to the Data received for TV shows from the API).
 
 <img style="float: right;" src="https://user-images.githubusercontent.com/88088759/233341400-ecf3a0fc-04df-4705-a66a-26cc823e3ba2.jpg" width="300"> 
 *Please ignore the tears in the screenshot caused when screenshotting a scrollable section*
