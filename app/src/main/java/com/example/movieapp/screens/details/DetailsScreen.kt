@@ -1,5 +1,6 @@
 package com.example.movieapp.screens.details
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.movieapp.data.remote.getaccount.PostAddToWatchlist
 import com.example.movieapp.widgets.MovieRating
 import com.example.movieapp.widgets.TrendingRow
 import org.koin.androidx.compose.koinViewModel
@@ -30,6 +32,7 @@ fun DetailsScreen(
     navController: NavController,
     id: Int?
 ) {
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -46,6 +49,7 @@ fun DetailsScreen(
         Text(text = "movieId == null")
     } else {
 
+        val accountStates = detailsViewModel.getMovieAccountStates(id)
         val movie = detailsViewModel.getMovie(id)
         val credits = detailsViewModel.getMovieCredits(id)
         val similar = detailsViewModel.getMovieSimilar(id)
@@ -118,7 +122,6 @@ fun DetailsScreen(
                                         )
                                     }
                                     Column(Modifier.padding(top = 5.dp)) {
-                                        //Minska radavståndet i titeln och öka mellan titel och datum
                                         Text(
                                             text = it.name,
                                             style = MaterialTheme.typography.subtitle1
@@ -164,11 +167,22 @@ fun DetailsScreen(
         ) {
             MovieRating(rating = movie.vote_average, size = 0.4f)
             Box(contentAlignment = Alignment.CenterEnd, modifier = Modifier.fillMaxWidth()) {
-                Button(onClick = { /*TODO*/ }, shape = CircleShape) {
+                Button(onClick = {
+                    if (accountStates) {
+                        Log.d("TAG", "DetailsScreen: already added")
+                    } else {
+                        detailsViewModel.postAddToWatchlist(
+                            PostAddToWatchlist(
+                                media_id = id,
+                                media_type = "movie"
+                            )
+                        )
+                    }
+                }, shape = CircleShape) {
                     Icon(
                         imageVector = Icons.Default.Favorite,
                         contentDescription = "Add to Watchlist",
-                        tint = Color.White
+                        tint = if (accountStates) Color.Red else Color.White
                     )
                 }
             }

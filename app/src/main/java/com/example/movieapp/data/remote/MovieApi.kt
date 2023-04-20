@@ -3,9 +3,7 @@ package com.example.movieapp.data.remote
 import com.example.movieapp.data.remote.authentication.PostRequestToken
 import com.example.movieapp.data.remote.authentication.RequestToken
 import com.example.movieapp.data.remote.authentication.Session
-import com.example.movieapp.data.remote.getaccount.Account
-import com.example.movieapp.data.remote.getaccount.MovieWatchList
-import com.example.movieapp.data.remote.getaccount.TVWatchList
+import com.example.movieapp.data.remote.getaccount.*
 import com.example.movieapp.data.remote.getmovie.Credits
 import com.example.movieapp.data.remote.getmovie.Movie
 import com.example.movieapp.data.remote.getmovie.Similar
@@ -84,17 +82,20 @@ interface MovieApi {
         @Query("session_id") sessionId: String
      ): Response<Account>
 
-    @GET("movie/{movieId}/account_states")
+    @GET("movie/{movie_id}/account_states")
     suspend fun getMovieAccountStates(
-        @Path("movieId") movieId: Int,
-        @Query("api_key") apiKey: String
-    ): Response<Trending>
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("session_id") sessionId: String
+    ): Response<AccountStates>
 
     @GET("tv/{tv_id}/account_states")
     suspend fun getTVAccountStates(
-        @Path("movieId") movieId: Int,
-        @Query("api_key") apiKey: String
-    ): Response<Trending>
+        @Path("tv_id") TVId: Int,
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String = "en-US",
+        @Query("session_id") sessionId: String
+    ): Response<AccountStates>
 
     @GET("account/{account_id}/watchlist/movies")
     suspend fun getMovieWatchlist(
@@ -116,9 +117,11 @@ interface MovieApi {
 
     @POST("account/{account_id}/watchlist")
     suspend fun postAddToWatchlist(
-        @Path("account_id") movieId: Int,
+        @Path("account_id") accountId: Int,
+        @Body addToWatchList: PostAddToWatchlist,
         @Query("api_key") apiKey: String,
-    ): Response<Trending>
+        @Query("session_id") sessionId: String,
+    ): Response<AddToWatchlist>
 
     //Authentication
     @GET("authentication/token/new")

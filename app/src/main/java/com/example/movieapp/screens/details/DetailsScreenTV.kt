@@ -1,5 +1,6 @@
 package com.example.movieapp.screens.details
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +21,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.movieapp.data.remote.getaccount.PostAddToWatchlist
 import com.example.movieapp.widgets.MovieRating
 import com.example.movieapp.widgets.TrendingRow
 import org.koin.androidx.compose.koinViewModel
@@ -46,6 +48,7 @@ fun DetailsScreenTV(
         Text(text = "movieId == null")
     } else {
 
+        val accountStates = detailsViewModel.getTVAccountStates(id)
         val tv = detailsViewModel.getTV(id)
         val credits = detailsViewModel.getTVCredits(id)
         val similar = detailsViewModel.getTVSimilar(id)
@@ -165,11 +168,22 @@ fun DetailsScreenTV(
         ) {
             MovieRating(rating = tv.vote_average, size = 0.4f)
             Box(contentAlignment = Alignment.CenterEnd, modifier = Modifier.fillMaxWidth()) {
-                Button(onClick = { /*TODO*/ }, shape = CircleShape) {
+                Button(onClick = {
+                    if (accountStates) {
+                        Log.d("TAG", "DetailsScreen: $accountStates")
+                    } else {
+                        detailsViewModel.postAddToWatchlist(
+                            PostAddToWatchlist(
+                                media_id = id,
+                                media_type = "tv"
+                            )
+                        )
+                    }
+                }, shape = CircleShape) {
                     Icon(
                         imageVector = Icons.Default.Favorite,
                         contentDescription = "Add to Watchlist",
-                        tint = Color.White
+                        tint = if (accountStates) Color.Red else Color.White
                     )
                 }
             }

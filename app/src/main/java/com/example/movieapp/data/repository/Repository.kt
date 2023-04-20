@@ -2,6 +2,7 @@ package com.example.movieapp.data.repository
 
 import com.example.movieapp.data.remote.MovieApi
 import com.example.movieapp.data.remote.authentication.PostRequestToken
+import com.example.movieapp.data.remote.getaccount.PostAddToWatchlist
 
 class Repository(private val movieApi: MovieApi) {
 
@@ -37,6 +38,25 @@ class Repository(private val movieApi: MovieApi) {
 
     suspend fun getTVWatchlist(accountId: Int, sessionId: String) =
         movieApi.getTVWatchlist(accountId = accountId, sessionId = sessionId, apiKey = apiKey)
+
+    suspend fun getMovieAccountStates(movieId: Int, sessionId: String) =
+        movieApi.getMovieAccountStates(movieId = movieId, apiKey = apiKey, sessionId = sessionId)
+
+    suspend fun getTVAccountStates(TVId: Int, sessionId: String) =
+        movieApi.getTVAccountStates(TVId = TVId, apiKey = apiKey, sessionId = sessionId)
+
+    suspend fun postAddToWatchlist(
+        accountId: Int,
+        sessionId: String,
+        postAddToWatchlist: PostAddToWatchlist
+    ) =
+        movieApi.postAddToWatchlist(
+            accountId = accountId,
+            sessionId = sessionId,
+            addToWatchList = postAddToWatchlist,
+            apiKey = apiKey
+        )
+
 
     //Authentication
     suspend fun getRequestToken() = movieApi.getRequestToken(apiKey)

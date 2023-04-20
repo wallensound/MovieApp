@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,11 +28,12 @@ class AccountViewModel(
     private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
 
-    val sessionIdKey = stringPreferencesKey("sessionIdKey")
+    private val accountIdKey = intPreferencesKey("accountIdKey")
+    private val sessionIdKey = stringPreferencesKey("sessionIdKey")
     val sessionIdFlow: Flow<String> = dataStore.data
         .map { preferences ->
-            // No type safety.
-            preferences[sessionIdKey] ?: "null"
+            // Check if the value is a String, otherwise return default value.
+            preferences[sessionIdKey] as? String ?: "null"
         }
 
     val requestToken = mutableStateOf(RequestToken("", "", false))
@@ -79,6 +81,9 @@ class AccountViewModel(
                 if (_account.body() != null) {
                     account.value = _account.body()!!
                     Log.d("TAG", "getRequestToken: $account")
+                    dataStore.edit {
+                        it[accountIdKey] = account.value.id
+                    }
                 }
             }
         return account.value
