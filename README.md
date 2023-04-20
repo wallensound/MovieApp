@@ -11,7 +11,7 @@ The application consists of 4 main screens in total, the landing screen: **Trend
 The Trending screen consists for one LazyColumn and four LazyRows. The rating widget is probably my favourite part of this screen due to the animation I created for it, where the circle fills up. Each movie and tv show are clickable and will navigate you to either DetailsScreen or DetailsScreenTV (TV containing some adjustment specific to the Data received for TV shows from the API).
 
 <img style="float: right;" src="https://user-images.githubusercontent.com/88088759/233341400-ecf3a0fc-04df-4705-a66a-26cc823e3ba2.jpg" width="300"> 
-*Please ignore the tears in the screenshot caused when screenshotting scrollable section*
+*Please ignore the tears in the screenshot caused when screenshotting a scrollable section*
 
 ## Details Screen
 In the details screen you get more details for each movie or tv show as the name might suggest. Containing title, genres, release date, summary, a LazyRow for actors and a LazyRow for similar movies where each of the movies are clickable.
@@ -19,7 +19,7 @@ In the details screen you get more details for each movie or tv show as the name
 At the top of the screen there's also a "Add to watchlist" button where clicking will add it to your TMDB accounts watchlist, this does however require you to have a valid Session ID from TMDB which you can get by validating a token in the AccountScreen. If it successfully adds the movie to your watchlist the heart will be changed from white to red.
 
 <img src="https://user-images.githubusercontent.com/88088759/233341406-2396c342-b852-4d2a-867a-7f839fc8175a.jpg" width="300">
-*Please ignore the tears in the screenshot caused when screenshotting scrollable section*
+*Please ignore the tears in the screenshot caused when screenshotting a scrollable section*
 
 ## Search Screen
 In the search screen you can search through the TMDB database for movies and tv shows. Also being able to filter for each media type, or if you want to not filter at all. I've also made sure the searching feels as smooth as possible by making the Keyboards IME action trigger a search, but you can also use the search Icon on the screen if you want too as well.
