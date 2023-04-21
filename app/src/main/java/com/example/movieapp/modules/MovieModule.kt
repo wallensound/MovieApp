@@ -1,4 +1,4 @@
-package com.example.movieapp.Modules
+package com.example.movieapp.modules
 
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory

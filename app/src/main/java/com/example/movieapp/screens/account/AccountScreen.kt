@@ -46,7 +46,7 @@ fun AccountScreen(accountViewModel: AccountViewModel = koinViewModel(), navContr
                     )
                 )
         )
-        Column() {
+        Column {
             if (sessionId.value == "null") {
                 Text(text = "Session ID: ${sessionId.value}")
                 Login(accountViewModel)
@@ -99,7 +99,7 @@ fun Account(accountViewModel: AccountViewModel, navController: NavController) {
             .fillMaxWidth()
             .padding(horizontal = 10.dp, vertical = 1.dp),
     ) {
-        Row() {
+        Row {
             Text(text = "User: ", style = MaterialTheme.typography.h6)
             Text(text = account.username, style = MaterialTheme.typography.h6)
         }

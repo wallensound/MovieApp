@@ -51,9 +51,9 @@ class AccountViewModel(
 
         requestToken.value = RequestToken("", "", false)
         viewModelScope.launch(Dispatchers.IO) {
-            val _requestToken = repository.getRequestToken()
-            if (_requestToken.body() != null) {
-                requestToken.value = _requestToken.body()!!
+            val requestTokenResponse = repository.getRequestToken()
+            if (requestTokenResponse.body() != null) {
+                requestToken.value = requestTokenResponse.body()!!
                 Log.d("TAG", "getRequestToken: $requestToken")
             }
         }
@@ -63,10 +63,10 @@ class AccountViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             val postRequestToken = PostRequestToken(requestToken.value.request_token)
             Log.d("TAG", "getRequestToken: $postRequestToken")
-            val _session = repository.postCreateSession(postRequestToken)
-            Log.d("TAG", "getRequestToken: $_session")
-            if (_session.body() != null) {
-                session.value = _session.body()!!
+            val sessionResponse = repository.postCreateSession(postRequestToken)
+            Log.d("TAG", "getRequestToken: $sessionResponse")
+            if (sessionResponse.body() != null) {
+                session.value = sessionResponse.body()!!
                 Log.d("TAG", "getRequestToken: $session")
                 dataStore.edit {
                     it[sessionIdKey] = session.value.session_id
@@ -77,9 +77,9 @@ class AccountViewModel(
 
     fun getAccount(): Account {
             viewModelScope.launch(Dispatchers.IO) {
-                val _account = repository.getAccount(sessionIdFlow.first())
-                if (_account.body() != null) {
-                    account.value = _account.body()!!
+                val accountResponse = repository.getAccount(sessionIdFlow.first())
+                if (accountResponse.body() != null) {
+                    account.value = accountResponse.body()!!
                     Log.d("TAG", "getRequestToken: $account")
                     dataStore.edit {
                         it[accountIdKey] = account.value.id
@@ -91,10 +91,10 @@ class AccountViewModel(
 
     fun getMovieWatchlist(): List<Result> {
         viewModelScope.launch(Dispatchers.IO) {
-            val _movieWatchlist =
+            val movieWatchListResponse =
                 repository.getMovieWatchlist(account.value.id, sessionIdFlow.first())
-            if (_movieWatchlist.isSuccessful && _movieWatchlist.body() != null) {
-                movieWatchlist.value = _movieWatchlist.body()!!
+            if (movieWatchListResponse.isSuccessful && movieWatchListResponse.body() != null) {
+                movieWatchlist.value = movieWatchListResponse.body()!!
             }
         }
         return movieWatchlist.value.results
@@ -102,9 +102,9 @@ class AccountViewModel(
 
     fun getTVWatchlist(): List<Result> {
         viewModelScope.launch(Dispatchers.IO) {
-            val _tvWatchlist = repository.getTVWatchlist(account.value.id, sessionIdFlow.first())
-            if (_tvWatchlist.isSuccessful && _tvWatchlist.body() != null) {
-                tvWatchlist.value = _tvWatchlist.body()!!
+            val tvWatchListResponse = repository.getTVWatchlist(account.value.id, sessionIdFlow.first())
+            if (tvWatchListResponse.isSuccessful && tvWatchListResponse.body() != null) {
+                tvWatchlist.value = tvWatchListResponse.body()!!
             }
         }
         return tvWatchlist.value.results

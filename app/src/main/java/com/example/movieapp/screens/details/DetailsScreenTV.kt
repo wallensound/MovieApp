@@ -60,15 +60,14 @@ fun DetailsScreenTV(
                 model = "https://image.tmdb.org/t/p/original${tv.backdrop_path}",
                 contentDescription = "${tv.name} poster",
             )
-            LazyColumn() {
+            LazyColumn {
                 item {
                     Column(modifier = Modifier.padding(top = 20.dp, start = 5.dp, end = 5.dp)) {
                         Text(
-                            // gör om till date? matte säger skit i det nu
                             text = "${tv.name} (${tv.first_air_date.dropLast(6)})",
                             style = MaterialTheme.typography.h5,
                         )
-                        Row() {
+                        Row {
                             tv.genres.forEach { genre ->
                                 Text(
                                     text = "${genre.name}, ",
@@ -122,7 +121,6 @@ fun DetailsScreenTV(
                                         )
                                     }
                                     Column(Modifier.padding(top = 5.dp)) {
-                                        //Minska radavståndet i titeln och öka mellan titel och datum
                                         Text(
                                             text = it.name,
                                             style = MaterialTheme.typography.subtitle1

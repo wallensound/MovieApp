@@ -47,7 +47,7 @@ fun SearchScreen(searchViewModel: SearchViewModel = koinViewModel(), navControll
                     )
                 )
         )
-        Column() {
+        Column {
             Column(modifier = Modifier
                 .background(MaterialTheme.colors.primary)
                 .fillMaxWidth()

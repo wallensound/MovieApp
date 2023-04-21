@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">MovieApp</string>
     <string name="trending_movies_this_week">Trending movies this week</string>
+    <string name="trending_movies_today">Trending movies today</string>
+    <string name="trending_TV_shows_this_week">Trending TV shows this week</string>
+    <string name="trending_TV_shows_today">Trending TV shows today</string>
+    <string name="summary">Summary</string>
+    <string name="actors">Actors</string>
+    <string name="similar">Similar</string>
+    <string name="add_to_watchlist">Add to Watchlist</string>
 </resources>

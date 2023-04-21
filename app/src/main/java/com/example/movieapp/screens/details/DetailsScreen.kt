@@ -18,9 +18,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.example.movieapp.R
 import com.example.movieapp.data.remote.getaccount.PostAddToWatchlist
 import com.example.movieapp.widgets.MovieRating
 import com.example.movieapp.widgets.TrendingRow
@@ -61,15 +63,14 @@ fun DetailsScreen(
                 model = "https://image.tmdb.org/t/p/original${movie.backdrop_path}",
                 contentDescription = "${movie.title} poster",
             )
-            LazyColumn() {
+            LazyColumn {
                 item {
                     Column(modifier = Modifier.padding(top = 20.dp, start = 5.dp, end = 5.dp)) {
                         Text(
-                            // gör om till date? matte säger skit i det nu
                             text = "${movie.title} (${movie.release_date.dropLast(6)})",
                             style = MaterialTheme.typography.h5,
                         )
-                        Row() {
+                        Row {
                             movie.genres.forEach { genre ->
                                 Text(
                                     text = "${genre.name}, ",
@@ -85,11 +86,11 @@ fun DetailsScreen(
                         }
                     }
                     Column(modifier = Modifier.padding(top = 20.dp, start = 5.dp, end = 5.dp)) {
-                        Text(text = "Summary", style = MaterialTheme.typography.h6)
+                        Text(text = stringResource(R.string.summary), style = MaterialTheme.typography.h6)
                         Text(text = movie.overview, style = MaterialTheme.typography.body1)
                     }
                     Text(
-                        text = "Actors",
+                        text = stringResource(R.string.actors),
                         style = MaterialTheme.typography.h6,
                         modifier = Modifier.padding(top = 20.dp, start = 5.dp)
                     )
@@ -137,7 +138,7 @@ fun DetailsScreen(
                     }
                     TrendingRow(
                         results = similar,
-                        headline = "Similar",
+                        headline = stringResource(R.string.similar),
                         navController = navController,
                         movie = true
                     )
@@ -169,6 +170,7 @@ fun DetailsScreen(
             Box(contentAlignment = Alignment.CenterEnd, modifier = Modifier.fillMaxWidth()) {
                 Button(onClick = {
                     if (accountStates) {
+                        //TODO create a error message to be displayed on the screen
                         Log.d("TAG", "DetailsScreen: already added")
                     } else {
                         detailsViewModel.postAddToWatchlist(
@@ -181,7 +183,7 @@ fun DetailsScreen(
                 }, shape = CircleShape) {
                     Icon(
                         imageVector = Icons.Default.Favorite,
-                        contentDescription = "Add to Watchlist",
+                        contentDescription = stringResource(R.string.add_to_watchlist),
                         tint = if (accountStates) Color.Red else Color.White
                     )
                 }

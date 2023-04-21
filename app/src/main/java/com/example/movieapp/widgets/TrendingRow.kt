@@ -35,11 +35,11 @@ fun TrendingRow(results: List<Result>, headline: String, navController: NavContr
                 )
         ) {
             items(results) {
-                MoviePreview(it) {Id ->
+                MoviePreview(it) {id ->
                     if (movie) {
-                        navController.navigate(Screen.DetailsScreen.route + "/$Id")
+                        navController.navigate(Screen.DetailsScreen.route + "/$id")
                     } else {
-                        navController.navigate(Screen.DetailsScreenTV.route + "/$Id" )
+                        navController.navigate(Screen.DetailsScreenTV.route + "/$id" )
                     }
                 }
             }

@@ -59,8 +59,8 @@ class DetailsViewModel(
     )
     private val credits = mutableStateOf(Credits(emptyList(), 0))
     private val similar = mutableStateOf(Similar(emptyList()))
-    val accountStates = mutableStateOf(AccountStates(0, false))
-    val addToWatchlist = mutableStateOf(AddToWatchlist(0, "False"))
+    private val accountStates = mutableStateOf(AccountStates(0, false))
+    private val addToWatchlist = mutableStateOf(AddToWatchlist(0, "False"))
 
     fun getMovie(Id: Int): Movie {
         viewModelScope.launch(Dispatchers.IO) {
@@ -99,9 +99,9 @@ class DetailsViewModel(
     private val tvSimilar = mutableStateOf(SimilarTV(emptyList()))
     fun getTV(Id: Int): TV {
         viewModelScope.launch(Dispatchers.IO) {
-            val _tv = repository.getTV(Id)
-            if (_tv.isSuccessful && _tv.body() != null) {
-                tv.value = _tv.body()!!
+            val tvResponse = repository.getTV(Id)
+            if (tvResponse.isSuccessful && tvResponse.body() != null) {
+                tv.value = tvResponse.body()!!
             }
         }
         return tv.value
@@ -109,9 +109,9 @@ class DetailsViewModel(
 
     fun getTVCredits(Id: Int): CreditsTV {
         viewModelScope.launch(Dispatchers.IO) {
-            val _tvCredits = repository.getTVCredits(Id)
-            if (_tvCredits.isSuccessful && _tvCredits.body() != null) {
-                tvCredits.value = _tvCredits.body()!!
+            val creditsTVResponse = repository.getTVCredits(Id)
+            if (creditsTVResponse.isSuccessful && creditsTVResponse.body() != null) {
+                tvCredits.value = creditsTVResponse.body()!!
             }
         }
         return tvCredits.value
@@ -119,9 +119,9 @@ class DetailsViewModel(
 
     fun getTVSimilar(Id: Int): List<Result> {
         viewModelScope.launch(Dispatchers.IO) {
-            val _tvSimilar = repository.getTVSimilar(Id)
-            if (_tvSimilar.isSuccessful && _tvSimilar.body() != null) {
-                tvSimilar.value = _tvSimilar.body()!!
+            val similarTVResponse = repository.getTVSimilar(Id)
+            if (similarTVResponse.isSuccessful && similarTVResponse.body() != null) {
+                tvSimilar.value = similarTVResponse.body()!!
             }
         }
         return tvSimilar.value.results
@@ -150,13 +150,13 @@ class DetailsViewModel(
 
     fun postAddToWatchlist(postAddToWatchlist: PostAddToWatchlist) {
         viewModelScope.launch(Dispatchers.IO) {
-            val _addToWatchlist = repository.postAddToWatchlist(
+            val addToWatchlistResponse = repository.postAddToWatchlist(
                 accountId = accountIdFlow.first(),
                 sessionId = sessionIdFlow.first(),
                 postAddToWatchlist = postAddToWatchlist
             )
-            if (_addToWatchlist.isSuccessful && _addToWatchlist.body() != null) {
-                addToWatchlist.value = _addToWatchlist.body()!!
+            if (addToWatchlistResponse.isSuccessful && addToWatchlistResponse.body() != null) {
+                addToWatchlist.value = addToWatchlistResponse.body()!!
                 accountStates.value = AccountStates(accountStates.value.id, true)
             }
         }

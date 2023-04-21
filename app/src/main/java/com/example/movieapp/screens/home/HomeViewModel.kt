@@ -15,18 +15,20 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
     private val trendingMovieDay = mutableStateOf(Trending(emptyList()))
     private val trendingTvWeek = mutableStateOf(Trending(emptyList()))
     private val trendingTvDay = mutableStateOf(Trending(emptyList()))
+    //TODO val isLoading = mutableStateOf(false)
 
     fun getTrendingMovieWeek(): List<Result>{
-        // laddindikator
+        //TODO laddindikator
+        //isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            //ta bort understrecken
-            val _trendingMovieWeek = repository.getTrendingMovieWeek()
-            if (_trendingMovieWeek.isSuccessful && _trendingMovieWeek.body() != null) {
-                trendingMovieWeek.value = _trendingMovieWeek.body()!!
+            val trendingMovieWeekResponse = repository.getTrendingMovieWeek()
+            if (trendingMovieWeekResponse.isSuccessful && trendingMovieWeekResponse.body() != null) {
+                trendingMovieWeek.value = trendingMovieWeekResponse.body()!!
             } else {
-                //det sket sig, pröva igen. Kanske en knapp som försöker hämta listan igen
+                //TODO det sket sig, pröva igen. Kanske en knapp som försöker hämta listan igen
             }
-            // ta bort laddindikator
+            //TODO ta bort laddindikator
+            //isLoading.value = false
         }
         return trendingMovieWeek.value.results
     }
@@ -34,9 +36,9 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
     fun getTrendingMovieDay(): List<Result>{
 
         viewModelScope.launch(Dispatchers.IO) {
-            val _trendingMovieDay = repository.getTrendingMovieDay()
-            if (_trendingMovieDay.isSuccessful && _trendingMovieDay.body() != null) {
-                trendingMovieDay.value = _trendingMovieDay.body()!!
+            val trendingMovieDayResponse = repository.getTrendingMovieDay()
+            if (trendingMovieDayResponse.isSuccessful && trendingMovieDayResponse.body() != null) {
+                trendingMovieDay.value = trendingMovieDayResponse.body()!!
             }
         }
         return trendingMovieDay.value.results
@@ -45,9 +47,9 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
     fun getTrendingTvWeek(): List<Result>{
 
         viewModelScope.launch(Dispatchers.IO) {
-            val _trendingTvWeek = repository.getTrendingTvWeek()
-            if (_trendingTvWeek.isSuccessful && _trendingTvWeek.body() != null) {
-                trendingTvWeek.value = _trendingTvWeek.body()!!
+            val trendingTvWeekResponse = repository.getTrendingTvWeek()
+            if (trendingTvWeekResponse.isSuccessful && trendingTvWeekResponse.body() != null) {
+                trendingTvWeek.value = trendingTvWeekResponse.body()!!
             }
         }
         return trendingTvWeek.value.results
@@ -56,9 +58,9 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
     fun getTrendingTvDay(): List<Result>{
 
         viewModelScope.launch(Dispatchers.IO) {
-            val _trendingTvDay = repository.getTrendingTvDay()
-            if (_trendingTvDay.isSuccessful && _trendingTvDay.body() != null) {
-                trendingTvDay.value = _trendingTvDay.body()!!
+            val trendingTvDayResponse = repository.getTrendingTvDay()
+            if (trendingTvDayResponse.isSuccessful && trendingTvDayResponse.body() != null) {
+                trendingTvDay.value = trendingTvDayResponse.body()!!
             }
         }
         return trendingTvDay.value.results

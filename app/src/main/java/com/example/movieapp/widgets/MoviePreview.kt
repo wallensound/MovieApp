@@ -31,13 +31,12 @@ fun MoviePreview(result: Result, onItemClick: (Int) -> Unit) {
                 )
             }
             Column(Modifier.padding(top = 20.dp)) {
-                //Minska radavståndet i titeln och öka mellan titel och datum
                 Text(
-                    text = if (result.title != null) result.title else result.name,
+                    text = result.title ?: result.name,
                     style = MaterialTheme.typography.subtitle1
                 )
                 Text(
-                    text = if (result.release_date != null) result.release_date else result.first_air_date,
+                    text = result.release_date ?: result.first_air_date,
                     style = MaterialTheme.typography.caption
                 )
             }
@@ -64,13 +63,12 @@ fun MoviePreview(result: com.example.movieapp.data.remote.getsearch.Result, onIt
                 )
             }
             Column(Modifier.padding(top = 20.dp)) {
-                //Minska radavståndet i titeln och öka mellan titel och datum
                 Text(
-                    text = if (result.title != null) result.title else result.name,
+                    text = result.title ?: result.name,
                     style = MaterialTheme.typography.subtitle1
                 )
                 Text(
-                    text = if (result.release_date != null) result.release_date else result.first_air_date,
+                    text = result.release_date ?: result.first_air_date,
                     style = MaterialTheme.typography.caption
                 )
             }

@@ -18,10 +18,13 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = koinViewModel(), navController: NavController) {
+
     val resultsMovieWeek = homeViewModel.getTrendingMovieWeek()
     val resultsMovieDay = homeViewModel.getTrendingMovieDay()
     val resultsTvWeek = homeViewModel.getTrendingTvWeek()
     val resultsTvDay = homeViewModel.getTrendingTvDay()
+    // TODO val isLoading = homeViewModel.isLoading
+
     Surface(
         modifier = Modifier
             .fillMaxSize()
@@ -39,13 +42,36 @@ fun HomeScreen(homeViewModel: HomeViewModel = koinViewModel(), navController: Na
                     )
                 )
         )
-        LazyColumn() {
+// TODO Loading
+//        if (isLoading.value) {
+//            Text(text = "Loading")
+//        }
+        LazyColumn {
             item {
-                TrendingRow(results = resultsMovieWeek, headline = stringResource(R.string.trending_movies_this_week), navController = navController, movie = true)
-                //Todo change to resource, no text in code
-                TrendingRow(results = resultsMovieDay, headline = "Trending movies today", navController = navController, movie = true)
-                TrendingRow(results = resultsTvWeek, headline = "Trending TV shows this week", navController = navController, movie = false)
-                TrendingRow(results = resultsTvDay, headline = "Trending TV shows today", navController = navController, movie = false)
+                TrendingRow(
+                    results = resultsMovieWeek,
+                    headline = stringResource(R.string.trending_movies_this_week),
+                    navController = navController,
+                    movie = true
+                )
+                TrendingRow(
+                    results = resultsMovieDay,
+                    headline = stringResource(R.string.trending_movies_today),
+                    navController = navController,
+                    movie = true
+                )
+                TrendingRow(
+                    results = resultsTvWeek,
+                    headline = stringResource(R.string.trending_TV_shows_this_week),
+                    navController = navController,
+                    movie = false
+                )
+                TrendingRow(
+                    results = resultsTvDay,
+                    headline = stringResource(R.string.trending_TV_shows_today),
+                    navController = navController,
+                    movie = false
+                )
             }
         }
     }

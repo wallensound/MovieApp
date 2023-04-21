@@ -69,7 +69,7 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
                 )
             })
         }
-    }) {
+    }) { it ->
         NavHost(
             navController = navController,
             startDestination = Screen.HomeScreen.route,
