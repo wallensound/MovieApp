@@ -48,10 +48,12 @@ fun SearchScreen(searchViewModel: SearchViewModel = koinViewModel(), navControll
                 )
         )
         Column {
-            Column(modifier = Modifier
-                .background(MaterialTheme.colors.primary)
-                .fillMaxWidth()
-                .padding(1.dp),) {
+            Column(
+                modifier = Modifier
+                    .background(MaterialTheme.colors.primary)
+                    .fillMaxWidth()
+                    .padding(1.dp),
+            ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -67,12 +69,24 @@ fun SearchScreen(searchViewModel: SearchViewModel = koinViewModel(), navControll
                         maxLines = 1,
                         label = { Text(text = "Search", color = Color.White) },
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                        keyboardActions = KeyboardActions { searchViewModel.getResult(searchViewModel.query.value.text) }
+                        keyboardActions = KeyboardActions {
+                            searchViewModel.getResult(
+                                searchViewModel.query.value.text
+                            )
+                        },
+                        colors = TextFieldDefaults.textFieldColors(
+                            textColor = Color.White,
+                            backgroundColor = Color(red = 1f, green = 1f, blue = 1f, alpha = 0.2f)
+                        )
                     )
                     IconButton(onClick = {
                         searchViewModel.getResult(searchViewModel.query.value.text)
                     }) {
-                        Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Search",
+                            tint = Color.White
+                        )
                     }
                 }
                 Row(

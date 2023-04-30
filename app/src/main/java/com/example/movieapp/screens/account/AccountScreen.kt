@@ -26,7 +26,10 @@ import com.example.movieapp.widgets.ToggleButton
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun AccountScreen(accountViewModel: AccountViewModel = koinViewModel(), navController: NavController) {
+fun AccountScreen(
+    accountViewModel: AccountViewModel = koinViewModel(),
+    navController: NavController
+) {
 
     val sessionId = accountViewModel.sessionIdFlow.collectAsState(initial = "null")
 
@@ -100,8 +103,8 @@ fun Account(accountViewModel: AccountViewModel, navController: NavController) {
             .padding(horizontal = 10.dp, vertical = 1.dp),
     ) {
         Row {
-            Text(text = "User: ", style = MaterialTheme.typography.h6)
-            Text(text = account.username, style = MaterialTheme.typography.h6)
+            Text(text = "User: ", style = MaterialTheme.typography.h6, color = Color.White)
+            Text(text = account.username, style = MaterialTheme.typography.h6, color = Color.White)
         }
         Row(
             modifier = Modifier

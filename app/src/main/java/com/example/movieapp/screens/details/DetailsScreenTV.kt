@@ -66,6 +66,7 @@ fun DetailsScreenTV(
                         Text(
                             text = "${tv.name} (${tv.first_air_date.dropLast(6)})",
                             style = MaterialTheme.typography.h5,
+                            color = Color.White
                         )
                         Row {
                             tv.genres.forEach { genre ->
@@ -83,13 +84,22 @@ fun DetailsScreenTV(
                         }
                     }
                     Column(modifier = Modifier.padding(top = 20.dp, start = 5.dp, end = 5.dp)) {
-                        Text(text = "Summary", style = MaterialTheme.typography.h6)
-                        Text(text = tv.overview, style = MaterialTheme.typography.body1)
+                        Text(
+                            text = "Summary",
+                            style = MaterialTheme.typography.h6,
+                            color = Color.White
+                        )
+                        Text(
+                            text = tv.overview,
+                            style = MaterialTheme.typography.body1,
+                            color = Color.White
+                        )
                     }
                     Text(
                         text = "Actors",
                         style = MaterialTheme.typography.h6,
-                        modifier = Modifier.padding(top = 20.dp, start = 5.dp)
+                        modifier = Modifier.padding(top = 20.dp, start = 5.dp),
+                        color = Color.White
                     )
                     LazyRow(
                         modifier = Modifier
@@ -123,11 +133,13 @@ fun DetailsScreenTV(
                                     Column(Modifier.padding(top = 5.dp)) {
                                         Text(
                                             text = it.name,
-                                            style = MaterialTheme.typography.subtitle1
+                                            style = MaterialTheme.typography.subtitle1,
+                                            color = Color.White
                                         )
                                         Text(
                                             text = it.character,
-                                            style = MaterialTheme.typography.caption
+                                            style = MaterialTheme.typography.caption,
+                                            color = Color.White
                                         )
                                     }
                                 }

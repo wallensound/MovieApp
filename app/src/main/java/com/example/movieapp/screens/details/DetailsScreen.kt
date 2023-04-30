@@ -69,6 +69,7 @@ fun DetailsScreen(
                         Text(
                             text = "${movie.title} (${movie.release_date.dropLast(6)})",
                             style = MaterialTheme.typography.h5,
+                            color = Color.White
                         )
                         Row {
                             movie.genres.forEach { genre ->
@@ -86,13 +87,22 @@ fun DetailsScreen(
                         }
                     }
                     Column(modifier = Modifier.padding(top = 20.dp, start = 5.dp, end = 5.dp)) {
-                        Text(text = stringResource(R.string.summary), style = MaterialTheme.typography.h6)
-                        Text(text = movie.overview, style = MaterialTheme.typography.body1)
+                        Text(
+                            text = stringResource(R.string.summary),
+                            style = MaterialTheme.typography.h6,
+                            color = Color.White
+                        )
+                        Text(
+                            text = movie.overview,
+                            style = MaterialTheme.typography.body1,
+                            color = Color.White
+                        )
                     }
                     Text(
                         text = stringResource(R.string.actors),
                         style = MaterialTheme.typography.h6,
-                        modifier = Modifier.padding(top = 20.dp, start = 5.dp)
+                        modifier = Modifier.padding(top = 20.dp, start = 5.dp),
+                        color = Color.White
                     )
                     LazyRow(
                         modifier = Modifier
@@ -125,11 +135,13 @@ fun DetailsScreen(
                                     Column(Modifier.padding(top = 5.dp)) {
                                         Text(
                                             text = it.name,
-                                            style = MaterialTheme.typography.subtitle1
+                                            style = MaterialTheme.typography.subtitle1,
+                                            color = Color.White
                                         )
                                         Text(
                                             text = it.character,
-                                            style = MaterialTheme.typography.caption
+                                            style = MaterialTheme.typography.caption,
+                                            color = Color.White
                                         )
                                     }
                                 }

@@ -17,8 +17,18 @@ import com.example.movieapp.data.remote.Result
 import com.example.movieapp.navigation.Screen
 
 @Composable
-fun TrendingRow(results: List<Result>, headline: String, navController: NavController, movie: Boolean) {
-    Text(text = headline, style = MaterialTheme.typography.h6, modifier = Modifier.padding(start = 5.dp))
+fun TrendingRow(
+    results: List<Result>,
+    headline: String,
+    navController: NavController,
+    movie: Boolean
+) {
+    Text(
+        text = headline,
+        style = MaterialTheme.typography.h6,
+        modifier = Modifier.padding(start = 5.dp),
+        color = Color.White
+    )
     if (results != null) {
         LazyRow(
             modifier = Modifier
@@ -35,11 +45,11 @@ fun TrendingRow(results: List<Result>, headline: String, navController: NavContr
                 )
         ) {
             items(results) {
-                MoviePreview(it) {id ->
+                MoviePreview(it) { id ->
                     if (movie) {
                         navController.navigate(Screen.DetailsScreen.route + "/$id")
                     } else {
-                        navController.navigate(Screen.DetailsScreenTV.route + "/$id" )
+                        navController.navigate(Screen.DetailsScreenTV.route + "/$id")
                     }
                 }
             }
